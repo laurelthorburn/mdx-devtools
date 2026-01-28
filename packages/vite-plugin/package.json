@@ -11,14 +11,19 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./overlay": {
+      "types": "./dist/overlay.d.ts",
+      "import": "./dist/overlay.js",
+      "require": "./dist/overlay.cjs"
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
-    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts src/overlay.ts --format esm,cjs --watch --dts",
+    "build": "tsup src/index.ts src/overlay.ts --format esm,cjs --dts",
     "lint": "tsc --noEmit"
   },
   "peerDependencies": {
