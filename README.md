@@ -1,6 +1,8 @@
 # MDX DevTools
 
-> **Note:** This project was entirely vibe coded with AI assistance. Use at your own risk, expect bugs, and feel free to contribute improvements!
+> 🤖✨ **Vibe Coded** ✨🤖
+> 
+> This project was entirely vibe coded with AI assistance. Use at your own risk and expect bugs! 🐛
 
 A Chrome DevTools extension for inspecting MDX components and their plugins, similar to React DevTools.
 
