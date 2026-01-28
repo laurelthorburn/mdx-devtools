@@ -8,17 +8,17 @@ const panelConnections = new Map<number, chrome.runtime.Port>();
 
 // Listen for connections from the devtools panel
 chrome.runtime.onConnect.addListener((port) => {
-  if (port.name !== 'mdx-devtools-panel') return;
+  if (port.name !== "mdx-devtools-panel") return;
 
   const tabId = port.sender?.tab?.id;
-  
+
   port.onMessage.addListener((message, senderPort) => {
     // Forward messages from panel to content script
     const targetTabId = message.tabId;
     if (targetTabId) {
       chrome.tabs.sendMessage(targetTabId, message.payload).catch(() => {
         // Tab might not have content script loaded yet
-        console.debug('Could not send message to tab', targetTabId);
+        console.debug("Could not send message to tab", targetTabId);
       });
     }
   });
@@ -36,7 +36,7 @@ chrome.runtime.onConnect.addListener((port) => {
 
 // Listen for messages from content scripts
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  if (message.source !== 'mdx-devtools-content') return;
+  if (message.source !== "mdx-devtools-content") return;
 
   const tabId = sender.tab?.id;
   if (tabId && panelConnections.has(tabId)) {
@@ -50,8 +50,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 // Handle extension icon click (optional - for debugging)
 chrome.action?.onClicked?.addListener((tab) => {
   if (tab.id) {
-    chrome.tabs.sendMessage(tab.id, { type: 'MDX_DEVTOOLS_SCAN_REQUEST' });
+    chrome.tabs.sendMessage(tab.id, { type: "MDX_DEVTOOLS_SCAN_REQUEST" });
   }
 });
 
-console.log('MDX DevTools background service worker initialized');
+console.log("MDX DevTools background service worker initialized");

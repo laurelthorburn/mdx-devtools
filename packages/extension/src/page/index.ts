@@ -3,8 +3,8 @@
  * Runs in the page's JavaScript context to access React fiber tree
  */
 
-import { MDX_META_KEY } from '../shared/constants';
-import type { BridgeMessage, MDXComponentInfo, MDXMeta } from '../shared/types';
+import { MDX_META_KEY } from "../shared/constants";
+import type { BridgeMessage, MDXComponentInfo, MDXMeta } from "../shared/types";
 
 /**
  * Get React fiber from a DOM element
@@ -12,7 +12,9 @@ import type { BridgeMessage, MDXComponentInfo, MDXMeta } from '../shared/types';
 function getFiberFromElement(element: Element): any {
   const keys = Object.keys(element);
   const fiberKey = keys.find(
-    (key) => key.startsWith('__reactFiber$') || key.startsWith('__reactInternalInstance$')
+    (key) =>
+      key.startsWith("__reactFiber$") ||
+      key.startsWith("__reactInternalInstance$"),
   );
   return fiberKey ? (element as any)[fiberKey] : null;
 }
@@ -30,7 +32,7 @@ function getMDXMeta(fiber: any): MDXMeta | null {
   }
 
   // Check if it's a function component with MDX meta
-  if (typeof type === 'function' && type[MDX_META_KEY]) {
+  if (typeof type === "function" && type[MDX_META_KEY]) {
     return type[MDX_META_KEY];
   }
 
@@ -41,17 +43,17 @@ function getMDXMeta(fiber: any): MDXMeta | null {
  * Get display name for a fiber
  */
 function getDisplayName(fiber: any): string {
-  if (!fiber || !fiber.type) return 'Unknown';
+  if (!fiber || !fiber.type) return "Unknown";
 
   const type = fiber.type;
 
-  if (typeof type === 'string') return type;
+  if (typeof type === "string") return type;
   if (type.displayName) return type.displayName;
   if (type.name) return type.name;
   if (type.render?.displayName) return type.render.displayName;
   if (type.render?.name) return type.render.name;
 
-  return 'Anonymous';
+  return "Anonymous";
 }
 
 /**
@@ -90,7 +92,7 @@ function findMDXComponents(rootFiber: any): MDXComponentInfo[] {
         plugins: meta.plugins,
         components: meta.components,
         element: {
-          tagName: element?.tagName.toLowerCase() || 'unknown',
+          tagName: element?.tagName.toLowerCase() || "unknown",
           rect: element?.getBoundingClientRect() || null,
         },
         children: [],
@@ -124,8 +126,10 @@ function findReactRoots(): any[] {
   const roots: any[] = [];
 
   // Look for common React root containers
-  const potentialRoots = document.querySelectorAll('[id="root"], [id="__next"], [id="app"]');
-  
+  const potentialRoots = document.querySelectorAll(
+    '[id="root"], [id="__next"], [id="app"]',
+  );
+
   potentialRoots.forEach((element) => {
     const fiber = getFiberFromElement(element);
     if (fiber) {
@@ -140,7 +144,7 @@ function findReactRoots(): any[] {
 
   // Also check all elements for React fibers
   if (roots.length === 0) {
-    const allElements = document.body.querySelectorAll('*');
+    const allElements = document.body.querySelectorAll("*");
     for (const element of allElements) {
       const fiber = getFiberFromElement(element);
       if (fiber) {
@@ -184,7 +188,13 @@ function findComponentAtPoint(x: number, y: number): MDXComponentInfo | null {
   function findDeepest(list: MDXComponentInfo[]): MDXComponentInfo | null {
     for (const comp of list) {
       const rect = comp.element.rect;
-      if (rect && x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+      if (
+        rect &&
+        x >= rect.left &&
+        x <= rect.right &&
+        y >= rect.top &&
+        y <= rect.bottom
+      ) {
         // Check children first (depth-first)
         const childResult = findDeepest(comp.children);
         return childResult || comp;
@@ -197,48 +207,59 @@ function findComponentAtPoint(x: number, y: number): MDXComponentInfo | null {
 }
 
 // Message handler
-window.addEventListener('message', (event) => {
+window.addEventListener("message", (event) => {
   if (event.source !== window) return;
 
   const message = event.data as BridgeMessage;
-  if (message.source !== 'mdx-devtools-content') return;
+  if (message.source !== "mdx-devtools-content") return;
 
   switch (message.payload.type) {
-    case 'MDX_DEVTOOLS_SCAN_REQUEST': {
+    case "MDX_DEVTOOLS_SCAN_REQUEST": {
       const components = scanForMDXComponents();
-      window.postMessage({
-        source: 'mdx-devtools-page',
-        payload: {
-          type: 'MDX_DEVTOOLS_SCAN_RESULT',
-          data: components,
-        },
-      } satisfies BridgeMessage, '*');
+      window.postMessage(
+        {
+          source: "mdx-devtools-page",
+          payload: {
+            type: "MDX_DEVTOOLS_SCAN_RESULT",
+            data: components,
+          },
+        } satisfies BridgeMessage,
+        "*",
+      );
       break;
     }
 
-    case 'MDX_DEVTOOLS_HOVER': {
+    case "MDX_DEVTOOLS_HOVER": {
       const { x, y } = message.payload.data;
       const component = findComponentAtPoint(x, y);
 
-      window.postMessage({
-        source: 'mdx-devtools-page',
-        payload: {
-          type: 'MDX_DEVTOOLS_HIGHLIGHT',
-          data: {
-            rect: component?.element.rect || null,
-            id: component ? `${component.displayName} (${component.sourceFile})` : null,
+      window.postMessage(
+        {
+          source: "mdx-devtools-page",
+          payload: {
+            type: "MDX_DEVTOOLS_HIGHLIGHT",
+            data: {
+              rect: component?.element.rect || null,
+              id: component
+                ? `${component.displayName} (${component.sourceFile})`
+                : null,
+            },
           },
-        },
-      } satisfies BridgeMessage, '*');
+        } satisfies BridgeMessage,
+        "*",
+      );
       break;
     }
   }
 });
 
 // Announce that we're ready
-window.postMessage({
-  source: 'mdx-devtools-page',
-  payload: { type: 'MDX_DEVTOOLS_INIT' },
-} satisfies BridgeMessage, '*');
+window.postMessage(
+  {
+    source: "mdx-devtools-page",
+    payload: { type: "MDX_DEVTOOLS_INIT" },
+  } satisfies BridgeMessage,
+  "*",
+);
 
-console.log('MDX DevTools page script loaded');
+console.log("MDX DevTools page script loaded");

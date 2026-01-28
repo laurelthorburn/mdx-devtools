@@ -29,10 +29,10 @@ npm install @mdx-devtools/vite-plugin
 
 ```ts
 // vite.config.ts
-import mdx from '@mdx-js/rollup';
-import mdxDevTools from '@mdx-devtools/vite-plugin';
-import remarkGfm from 'remark-gfm';
-import rehypeSlug from 'rehype-slug';
+import mdx from "@mdx-js/rollup";
+import mdxDevTools from "@mdx-devtools/vite-plugin";
+import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
 
 export default defineConfig({
   plugins: [
@@ -42,8 +42,8 @@ export default defineConfig({
     }),
     // Add MDX DevTools AFTER the MDX plugin
     mdxDevTools({
-      remarkPlugins: ['remark-gfm'],
-      rehypePlugins: ['rehype-slug'],
+      remarkPlugins: ["remark-gfm"],
+      rehypePlugins: ["rehype-slug"],
     }),
   ],
 });
@@ -52,6 +52,7 @@ export default defineConfig({
 ### 3. Install the Chrome Extension
 
 1. Clone this repo and build the extension:
+
    ```bash
    pnpm install
    pnpm build
@@ -96,18 +97,19 @@ The Vite plugin injects metadata into each MDX file during compilation:
 ```js
 // Added to compiled MDX output
 MDXContent.__mdxMeta = {
-  sourceFile: 'docs/getting-started.mdx',
+  sourceFile: "docs/getting-started.mdx",
   plugins: {
-    remark: ['remark-gfm'],
-    rehype: ['rehype-slug'],
+    remark: ["remark-gfm"],
+    rehype: ["rehype-slug"],
   },
-  components: ['Callout', 'CodeBlock'],
+  components: ["Callout", "CodeBlock"],
 };
 ```
 
 ### Runtime (Chrome Extension)
 
 The extension:
+
 1. Injects a page script that walks the React fiber tree
 2. Finds components with `__mdxMeta` attached
 3. Displays them in a DevTools panel
@@ -117,12 +119,12 @@ The extension:
 
 ### `mdxDevTools(options)`
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `remarkPlugins` | `string[]` | `[]` | Names of remark plugins to display |
-| `rehypePlugins` | `string[]` | `[]` | Names of rehype plugins to display |
-| `enabled` | `boolean` | `true` in dev | Enable/disable metadata injection |
-| `components` | `string[]` | auto-detected | Custom component names to track |
+| Option          | Type       | Default       | Description                        |
+| --------------- | ---------- | ------------- | ---------------------------------- |
+| `remarkPlugins` | `string[]` | `[]`          | Names of remark plugins to display |
+| `rehypePlugins` | `string[]` | `[]`          | Names of rehype plugins to display |
+| `enabled`       | `boolean`  | `true` in dev | Enable/disable metadata injection  |
+| `components`    | `string[]` | auto-detected | Custom component names to track    |
 
 ## License
 

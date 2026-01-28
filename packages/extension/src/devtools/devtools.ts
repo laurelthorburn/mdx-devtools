@@ -3,10 +3,10 @@
  */
 
 chrome.devtools.panels.create(
-  'MDX',
-  '', // No icon for now
-  'panel.html',
+  "MDX",
+  "", // No icon for now
+  "panel.html",
   (panel) => {
-    console.log('MDX DevTools panel created');
-  }
+    console.log("MDX DevTools panel created");
+  },
 );

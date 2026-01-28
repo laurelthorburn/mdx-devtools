@@ -5,7 +5,7 @@
  * about the source file and plugins used.
  */
 
-import type { Plugin, ResolvedConfig } from 'vite';
+import type { Plugin, ResolvedConfig } from "vite";
 
 export interface MDXDevToolsOptions {
   /**
@@ -29,14 +29,14 @@ export interface MDXDevToolsOptions {
   components?: string[];
 }
 
-const MDX_META_KEY = '__mdxMeta';
+const MDX_META_KEY = "__mdxMeta";
 
 /**
  * Creates a string that adds __mdxMeta to the default export
  */
 function createMetaInjection(
   sourceFile: string,
-  options: MDXDevToolsOptions
+  options: MDXDevToolsOptions,
 ): string {
   const meta = {
     sourceFile,
@@ -89,19 +89,19 @@ export default function mdxDevTools(options: MDXDevToolsOptions = {}): Plugin {
   let enabled = options.enabled;
 
   return {
-    name: 'mdx-devtools',
+    name: "mdx-devtools",
 
     configResolved(resolvedConfig) {
       config = resolvedConfig;
       // Default to enabled in development only
       if (enabled === undefined) {
-        enabled = config.mode === 'development';
+        enabled = config.mode === "development";
       }
     },
 
     transform(code: string, id: string) {
       // Only process MDX files
-      if (!id.endsWith('.mdx') && !id.endsWith('.md')) {
+      if (!id.endsWith(".mdx") && !id.endsWith(".md")) {
         return null;
       }
 
@@ -111,7 +111,7 @@ export default function mdxDevTools(options: MDXDevToolsOptions = {}): Plugin {
       }
 
       // Get relative path for cleaner display
-      const sourceFile = id.replace(config.root, '').replace(/^\//, '');
+      const sourceFile = id.replace(config.root, "").replace(/^\//, "");
 
       // Try to detect components from the code
       const componentMatches = code.match(/components\s*=\s*\{([^}]+)\}/);
