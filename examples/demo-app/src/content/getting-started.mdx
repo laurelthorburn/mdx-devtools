@@ -1,0 +1,50 @@
+# Getting Started
+
+Welcome to the MDX DevTools demo! This page is rendered using MDX with several plugins.
+
+<Callout type="info">
+  This callout is a custom component passed to MDX!
+</Callout>
+
+## Features
+
+MDX allows you to use JSX in your markdown content. Here's what this demo showcases:
+
+- **remark-gfm**: GitHub Flavored Markdown support
+- **rehype-slug**: Automatic heading IDs
+- **Custom components**: Callout, CodeBlock, etc.
+
+## GFM Features
+
+### Tables
+
+| Plugin | Type | Purpose |
+|--------|------|---------|
+| remark-gfm | Remark | GFM support |
+| rehype-slug | Rehype | Heading IDs |
+
+### Task Lists
+
+- [x] Set up MDX DevTools
+- [x] Create demo app
+- [ ] Test all features
+
+### Autolinks
+
+Visit https://mdxjs.com for more information.
+
+## Code Example
+
+```js
+import mdxDevTools from '@mdx-devtools/vite-plugin';
+
+export default defineConfig({
+  plugins: [
+    mdx(),
+    mdxDevTools({
+      remarkPlugins: ['remark-gfm'],
+      rehypePlugins: ['rehype-slug'],
+    }),
+  ],
+});
+```

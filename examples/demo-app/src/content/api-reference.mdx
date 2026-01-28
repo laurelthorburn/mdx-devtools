@@ -1,0 +1,32 @@
+# API Reference
+
+This section demonstrates another MDX file being rendered.
+
+## Configuration Options
+
+<Callout type="warning">
+  Make sure to list your plugins in the mdxDevTools options for them to appear in the DevTools panel.
+</Callout>
+
+### `mdxDevTools(options)`
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `remarkPlugins` | `string[]` | `[]` | Names of remark plugins to display |
+| `rehypePlugins` | `string[]` | `[]` | Names of rehype plugins to display |
+| `enabled` | `boolean` | `true` in dev | Enable/disable metadata injection |
+| `components` | `string[]` | auto-detected | Custom component names |
+
+## Usage
+
+<CodeBlock>
+{`import mdxDevTools from '@mdx-devtools/vite-plugin';
+
+// In your vite.config.ts
+plugins: [
+  mdxDevTools({
+    remarkPlugins: ['remark-gfm', 'remark-frontmatter'],
+    rehypePlugins: ['rehype-slug', 'rehype-autolink-headings'],
+  }),
+]`}
+</CodeBlock>

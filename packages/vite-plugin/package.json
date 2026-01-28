@@ -1,0 +1,43 @@
+{
+  "name": "@mdx-devtools/vite-plugin",
+  "version": "0.0.1",
+  "description": "Vite plugin to inject MDX metadata for MDX DevTools",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsup src/index.ts --watch --dts",
+    "build": "tsup src/index.ts --dts",
+    "lint": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@mdx-js/rollup": ">=3.0.0",
+    "vite": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@mdx-js/rollup": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@mdx-js/mdx": "^3.0.0",
+    "@types/mdast": "^4.0.3",
+    "tsup": "^8.0.1",
+    "vite": "^5.0.12"
+  },
+  "keywords": [
+    "mdx",
+    "devtools",
+    "vite",
+    "vite-plugin"
+  ]
+}
