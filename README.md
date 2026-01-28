@@ -1,5 +1,7 @@
 # MDX DevTools
 
+> **Note:** This project was entirely vibe coded with AI assistance. Use at your own risk, expect bugs, and feel free to contribute improvements!
+
 A Chrome DevTools extension for inspecting MDX components and their plugins, similar to React DevTools.
 
 ## Features
@@ -124,7 +126,22 @@ The extension:
 | `remarkPlugins` | `string[]` | `[]`          | Names of remark plugins to display |
 | `rehypePlugins` | `string[]` | `[]`          | Names of rehype plugins to display |
 | `enabled`       | `boolean`  | `true` in dev | Enable/disable metadata injection  |
+| `overlay`       | `boolean`  | `true` in dev | Show in-page devtools overlay      |
 | `components`    | `string[]` | auto-detected | Custom component names to track    |
+
+## In-Page Overlay (No Extension Required)
+
+If you can't install the Chrome extension (e.g., corporate policy restrictions), the Vite plugin includes a built-in overlay that appears in the bottom-right corner of your page during development:
+
+```ts
+mdxDevTools({
+  remarkPlugins: ["remark-gfm"],
+  rehypePlugins: ["rehype-slug"],
+  overlay: true, // Enabled by default in development
+});
+```
+
+The overlay provides the same features as the extension: component tree, plugin details, and hover-to-inspect.
 
 ## License
 

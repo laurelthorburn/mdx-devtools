@@ -471,7 +471,7 @@ export default function mdxDevTools(options: MDXDevToolsOptions = {}): Plugin {
   let enabled = options.enabled;
   let overlayEnabled = options.overlay;
 
-  const VIRTUAL_MODULE_ID = '/@mdx-devtools/overlay.js';
+  const VIRTUAL_MODULE_ID = "/@mdx-devtools/overlay.js";
 
   return {
     name: "mdx-devtools",
@@ -502,12 +502,12 @@ export default function mdxDevTools(options: MDXDevToolsOptions = {}): Plugin {
 
     transformIndexHtml(html) {
       if (!overlayEnabled) return html;
-      
+
       // Inject the overlay script using the virtual module
       return html.replace(
-        '</body>',
+        "</body>",
         `<script type="module" src="${VIRTUAL_MODULE_ID}"></script>
-</body>`
+</body>`,
       );
     },
 
